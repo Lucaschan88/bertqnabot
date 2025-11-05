@@ -113,12 +113,16 @@ def test_mock_extraction():
     
     # Test saving to CSV
     test_filename = "mock_gcb_test.csv"
-    save_to_csv(MOCK_ADDRESSES, test_filename)
+    result = save_to_csv(MOCK_ADDRESSES, test_filename)
     
-    print(f"\n✓ Mock test completed successfully!")
-    print(f"✓ CSV file '{test_filename}' has been created")
-    
-    return test_filename
+    if result:
+        print(f"\n✓ Mock test completed successfully!")
+        print(f"✓ CSV file '{test_filename}' has been created")
+        print(f"\nNote: Mock test file '{test_filename}' created for inspection")
+        return test_filename
+    else:
+        print(f"\n❌ Mock test failed to create CSV file")
+        return None
 
 
 if __name__ == "__main__":

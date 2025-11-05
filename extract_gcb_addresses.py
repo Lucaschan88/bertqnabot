@@ -116,13 +116,16 @@ def extract_gcb_addresses() -> List[Dict]:
     return all_addresses
 
 
-def save_to_csv(addresses: List[Dict], filename: str = "gcb_addresses.csv"):
+def save_to_csv(addresses: List[Dict], filename: str = "gcb_addresses.csv") -> bool:
     """
     Save addresses to a CSV file
     
     Args:
         addresses: List of address dictionaries
         filename: Output CSV filename
+    
+    Returns:
+        bool: True if save was successful, False otherwise
     """
     if not addresses:
         print("No addresses to save!")
@@ -142,14 +145,26 @@ def save_to_csv(addresses: List[Dict], filename: str = "gcb_addresses.csv"):
     ]
     
     try:
+        # Define friendly header names mapping
+        fieldnames = ["area", "address", "postal_code", "building_name", 
+                     "road_name", "latitude", "longitude", "x_coordinate", "y_coordinate"]
+        friendly_headers = {
+            "area": "GCB Area",
+            "address": "Full Address",
+            "postal_code": "Postal Code",
+            "building_name": "Building Name",
+            "road_name": "Road Name",
+            "latitude": "Latitude",
+            "longitude": "Longitude",
+            "x_coordinate": "X Coordinate",
+            "y_coordinate": "Y Coordinate"
+        }
+        
         with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=[
-                "area", "address", "postal_code", "building_name", 
-                "road_name", "latitude", "longitude", "x_coordinate", "y_coordinate"
-            ])
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             
-            # Write header with friendly names
-            csvfile.write(','.join(headers) + '\n')
+            # Write friendly header names
+            csvfile.write(','.join([friendly_headers[field] for field in fieldnames]) + '\n')
             
             # Write data
             for addr in addresses:
