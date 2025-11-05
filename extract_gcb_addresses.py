@@ -128,7 +128,7 @@ def save_to_csv(addresses: List[Dict], filename: str = "gcb_addresses.csv"):
     """
     if not addresses:
         print("No addresses to save!")
-        return
+        return False
     
     # Define CSV headers
     headers = [
