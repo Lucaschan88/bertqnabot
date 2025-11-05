@@ -131,44 +131,23 @@ def save_to_csv(addresses: List[Dict], filename: str = "gcb_addresses.csv") -> b
         print("No addresses to save!")
         return False
     
-    # Define CSV headers
-    headers = [
-        "GCB Area",
-        "Full Address",
-        "Postal Code",
-        "Building Name",
-        "Road Name",
-        "Latitude",
-        "Longitude",
-        "X Coordinate",
-        "Y Coordinate"
-    ]
-    
     try:
-        # Define friendly header names mapping
+        # Define fieldnames and their friendly display names
         fieldnames = ["area", "address", "postal_code", "building_name", 
                      "road_name", "latitude", "longitude", "x_coordinate", "y_coordinate"]
-        friendly_headers = {
-            "area": "GCB Area",
-            "address": "Full Address",
-            "postal_code": "Postal Code",
-            "building_name": "Building Name",
-            "road_name": "Road Name",
-            "latitude": "Latitude",
-            "longitude": "Longitude",
-            "x_coordinate": "X Coordinate",
-            "y_coordinate": "Y Coordinate"
-        }
+        friendly_headers = ["GCB Area", "Full Address", "Postal Code", "Building Name",
+                           "Road Name", "Latitude", "Longitude", "X Coordinate", "Y Coordinate"]
         
         with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer = csv.writer(csvfile)
             
             # Write friendly header names
-            csvfile.write(','.join([friendly_headers[field] for field in fieldnames]) + '\n')
+            writer.writerow(friendly_headers)
             
-            # Write data
+            # Write data rows
             for addr in addresses:
-                writer.writerow(addr)
+                row = [addr.get(field, "") for field in fieldnames]
+                writer.writerow(row)
         
         print(f"\n✓ Successfully saved {len(addresses)} addresses to '{filename}'")
         return True
