@@ -9,12 +9,10 @@ of a certain standard can be built.
 import requests
 import csv
 import time
-import json
 from typing import List, Dict
 
-# OneMap API endpoints
+# OneMap API endpoint
 ONEMAP_SEARCH_URL = "https://www.onemap.gov.sg/api/common/elastic/search"
-ONEMAP_TOKEN_URL = "https://www.onemap.gov.sg/api/auth/post/getToken"
 
 # List of known GCB areas in Singapore
 GCB_AREAS = [

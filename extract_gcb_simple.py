@@ -18,6 +18,7 @@ def get_addresses_from_onemap(search_term):
     
     try:
         response = requests.get(url, params=params, timeout=10)
+        response.raise_for_status()
         data = response.json()
         return data.get("results", [])
     except Exception as e:
